@@ -94,12 +94,6 @@
       margin-top: 2rem;
       text-align: center;
     }
-    #result img {
-      max-width: 100%;
-      border-radius: 12px;
-      margin-top: 1rem;
-      border: 1px solid #333;
-    }
     #downloadButton {
       display: inline-flex;
       align-items: center;
@@ -203,19 +197,13 @@
       color: #fff;
     }
     @keyframes slideUp {
-      from {
-        transform: translateY(100%);
-      }
-      to {
-        transform: translateY(0%);
-      }
+      from { transform: translateY(100%); }
+      to { transform: translateY(0%); }
     }
   </style>
 </head>
 <body>
-  <header>
-    TikTok Video Downloader
-  </header>
+  <header>TikTok Video Downloader</header>
   <main>
     <form id="downloadForm" autocomplete="off" novalidate>
       <div class="input-with-icon">
@@ -229,7 +217,9 @@
         Baixar sem Marca D'água
       </button>
     </form>
+
     <div id="error" class="hidden"></div>
+
     <div id="result" class="hidden">
       <div id="videoTitleContainer">
         <h2 id="videoTitleShort"></h2>
@@ -237,20 +227,27 @@
           <i data-lucide="chevron-down"></i>
         </button>
       </div>
-      <img id="thumbnail" alt="Thumbnail do vídeo" />
+
+      <img id="thumbnail" alt="Thumbnail do vídeo" style="max-width: 100%; border-radius: 12px; margin-top: 1rem; border: 1px solid #333;" />
+
+      <video id="videoPlayer" controls style="margin-top: 1rem; width: 100%; border-radius: 12px;"></video>
+
+      <p id="iosTip" style="margin-top: 0.5rem; font-size: 0.9rem; color: #ccc;" class="hidden">
+        Toque e segure no link abaixo e escolha <strong>"Salvar Vídeo"</strong>:
+      </p>
+
+      <a id="directLinkIOS" href="#" style="display: none; word-break: break-all; margin-top: 0.5rem; color: #24D366; font-weight: 600;">
+        Link direto para salvar
+      </a>
+
       <a id="downloadButton" href="#" download>
         <i data-lucide="arrow-down-to-line"></i>
         Download
       </a>
-      <video id="videoPlayer" controls style="margin-top: 1.5rem; width: 100%; border-radius: 12px;" class="hidden"></video>
-      <p id="iosTip" style="margin-top: 0.5rem; font-size: 0.9rem; color: #ccc;" class="hidden">
-        Toque e segure no vídeo acima e escolha "Salvar Vídeo" para baixá-lo na sua galeria.
-      </p>
     </div>
   </main>
-  <footer>
-    © 2025 TikTok Video Downloader. Todos os direitos reservados.
-  </footer>
+
+  <footer>© 2025 TikTok Video Downloader. Todos os direitos reservados.</footer>
 
   <div id="bottomSheetOverlay" class="bottom-sheet-overlay hidden">
     <div class="bottom-sheet">
@@ -270,6 +267,12 @@
   </div>
 
   <script>
+    function isIOS() {
+      return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    }
+  </script>
+
+  <script>
     lucide.createIcons();
 
     (function () {
@@ -278,14 +281,15 @@
       const errorDiv = document.getElementById('error');
       const resultDiv = document.getElementById('result');
       const thumbnailEl = document.getElementById('thumbnail');
+      const videoPlayer = document.getElementById('videoPlayer');
       const downloadBtn = document.getElementById('downloadButton');
+      const iosTip = document.getElementById('iosTip');
+      const iosLink = document.getElementById('directLinkIOS');
       const overlay = document.getElementById('bottomSheetOverlay');
       const watchAdBtn = document.getElementById('watchAdBtn');
       const closeSheetBtn = document.getElementById('closeSheetBtn');
-      const videoPlayer = document.getElementById('videoPlayer');
-      const iosTip = document.getElementById('iosTip');
-
       const pasteBtn = document.getElementById('pasteBtn');
+
       pasteBtn.addEventListener('click', async () => {
         try {
           const text = await navigator.clipboard.readText();
@@ -294,10 +298,6 @@
           alert('Não foi possível acessar a área de transferência.');
         }
       });
-
-      function isIOS() {
-        return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-      }
 
       const tiktokRegex = /^(https?:\/\/)?(www\.)?(vm\.tiktok\.com|m\.tiktok\.com|tiktok\.com)\/.+$/i;
 
@@ -313,7 +313,6 @@
       watchAdBtn.addEventListener('click', function () {
         overlay.classList.add('hidden');
         downloadBtn.removeAttribute('disabled');
-        downloadBtn.style.opacity = '1';
         window.open("https://s.shopee.com.br/8007aI92bN", "_blank");
       });
 
@@ -366,17 +365,19 @@
 
           thumbnailEl.src = result.data.cover;
           thumbnailEl.alt = 'Thumbnail do vídeo';
+
+          videoPlayer.src = result.data.play;
           downloadBtn.href = result.data.play;
 
           if (isIOS()) {
-            videoPlayer.src = result.data.play;
-            videoPlayer.classList.remove('hidden');
             iosTip.classList.remove('hidden');
-            downloadBtn.removeAttribute('download');
+            iosLink.style.display = 'block';
+            iosLink.href = result.data.play;
+            downloadBtn.classList.add('hidden');
           } else {
-            videoPlayer.classList.add('hidden');
             iosTip.classList.add('hidden');
-            downloadBtn.setAttribute('download', '');
+            iosLink.style.display = 'none';
+            downloadBtn.classList.remove('hidden');
           }
 
           resultDiv.classList.remove('hidden');
