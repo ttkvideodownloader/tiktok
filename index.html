@@ -7,12 +7,14 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
     body {
       font-family: 'Poppins', sans-serif;
       margin: 0;
       background-color: #121212;
       color: #fff;
     }
+
     header {
       background-color: #000;
       color: #fff;
@@ -22,25 +24,30 @@
       font-weight: 700;
       border-bottom: 1px solid #333;
     }
+
     main {
       padding: 2rem 1rem;
       max-width: 600px;
       margin: auto;
     }
+
     form {
       display: flex;
       flex-direction: column;
       gap: 1rem;
     }
+
     .input-with-icon {
       position: relative;
       display: flex;
       align-items: center;
     }
+
     .input-with-icon input {
       flex: 1;
       padding-right: 3rem;
     }
+
     .input-with-icon button {
       position: absolute;
       right: 0.75rem;
@@ -51,10 +58,12 @@
       transition: color 0.2s, transform 0.2s;
       padding: 0;
     }
+
     .input-with-icon button:hover {
       color: #fff;
       transform: scale(1.1);
     }
+
     input[type="text"] {
       padding: 0.9rem 1rem;
       border-radius: 12px;
@@ -64,9 +73,11 @@
       font-size: 1rem;
       outline: none;
     }
+
     input[type="text"]::placeholder {
       color: #888;
     }
+
     button[type="submit"] {
       display: flex;
       align-items: center;
@@ -82,18 +93,29 @@
       cursor: pointer;
       transition: transform 0.3s ease;
     }
+
     button[type="submit"]:hover svg,
     .sheet-buttons button:hover svg {
       transform: scale(1.2) rotate(5deg);
     }
+
     #error {
       color: #ff4d4d;
       margin-top: 1rem;
     }
+
     #result {
       margin-top: 2rem;
       text-align: center;
     }
+
+    #result img {
+      max-width: 100%;
+      border-radius: 12px;
+      margin-top: 1rem;
+      border: 1px solid #333;
+    }
+
     #downloadButton {
       display: inline-flex;
       align-items: center;
@@ -109,19 +131,23 @@
       font-weight: 600;
       transition: background-color 0.3s ease;
     }
+
     #downloadButton:hover {
       background-color: #24D366;
       color: #6C6C6C;
     }
+
     footer {
       text-align: center;
       padding: 2rem 1rem;
       font-size: 0.9rem;
       color: #777;
     }
+
     .hidden {
       display: none;
     }
+
     .bottom-sheet-overlay {
       position: fixed;
       bottom: 0;
@@ -134,9 +160,11 @@
       align-items: flex-end;
       z-index: 2000;
     }
+
     .bottom-sheet-overlay.hidden {
       display: none;
     }
+
     .bottom-sheet {
       background: #1e1e1e;
       color: #fff;
@@ -148,20 +176,24 @@
       box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.3);
       animation: slideUp 0.3s ease;
     }
+
     .bottom-sheet h3 {
       font-size: 1.3rem;
       font-weight: 600;
     }
+
     .bottom-sheet p {
       font-size: 1rem;
       color: #ccc;
     }
+
     .sheet-buttons {
       display: flex;
       justify-content: flex-end;
       gap: 10px;
       margin-top: 1rem;
     }
+
     .sheet-buttons button {
       display: flex;
       align-items: center;
@@ -173,6 +205,7 @@
       cursor: pointer;
       transition: transform 0.3s ease;
     }
+    
     #videoTitleContainer {
       display: flex;
       align-items: center;
@@ -182,28 +215,38 @@
       margin-bottom: 1rem;
       text-align: center;
     }
+
     #videoTitleShort {
       max-width: 100%;
       font-size: 1.2rem;
       font-weight: 600;
       word-break: break-word;
     }
+
     #watchAdBtn {
       background-color: #fe2c55;
       color: white;
     }
+
     #closeSheetBtn {
       background-color: #333;
       color: #fff;
     }
+
     @keyframes slideUp {
-      from { transform: translateY(100%); }
-      to { transform: translateY(0%); }
+      from {
+        transform: translateY(100%);
+      }
+      to {
+        transform: translateY(0%);
+      }
     }
   </style>
 </head>
 <body>
-  <header>TikTok Video Downloader</header>
+  <header>
+    TikTok Video Downloader
+  </header>
   <main>
     <form id="downloadForm" autocomplete="off" novalidate>
       <div class="input-with-icon">
@@ -217,9 +260,7 @@
         Baixar sem Marca D'água
       </button>
     </form>
-
     <div id="error" class="hidden"></div>
-
     <div id="result" class="hidden">
       <div id="videoTitleContainer">
         <h2 id="videoTitleShort"></h2>
@@ -227,27 +268,29 @@
           <i data-lucide="chevron-down"></i>
         </button>
       </div>
-
-      <img id="thumbnail" alt="Thumbnail do vídeo" style="max-width: 100%; border-radius: 12px; margin-top: 1rem; border: 1px solid #333;" />
-
-      <video id="videoPlayer" controls style="margin-top: 1rem; width: 100%; border-radius: 12px;"></video>
-
-      <p id="iosTip" style="margin-top: 0.5rem; font-size: 0.9rem; color: #ccc;" class="hidden">
-        Toque e segure no link abaixo e escolha <strong>"Salvar Vídeo"</strong>:
-      </p>
-
-      <a id="directLinkIOS" href="#" style="display: none; word-break: break-all; margin-top: 0.5rem; color: #24D366; font-weight: 600;">
-        Link direto para salvar
-      </a>
-
+      <img id="thumbnail" alt="Thumbnail do vídeo" />
       <a id="downloadButton" href="#" download>
         <i data-lucide="arrow-down-to-line"></i>
         Download
       </a>
+      <div id="iosWarning" class="hidden" style="
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #333333;
+  border-left: 4px solid #fe2c55;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 0.95rem;
+  text-align: left;
+">
+  <strong>Importante</strong><br>
+  Você está usando um iPhone. Devido às restrições do iOS, para salvar o vídeo é necessário <strong>tocar e segurar</strong> o botão "Download" e, em seguida, selecionar <strong>"Baixar arquivo vinculado"</strong>. Depois disso, acesse a pasta de Downloads e salve o vídeo na galeria.
+</div>
     </div>
   </main>
-
-  <footer>© 2025 TikTok Video Downloader. Todos os direitos reservados.</footer>
+  <footer>
+    © 2025 TikTok Video Downloader. Todos os direitos reservados.
+  </footer>
 
   <div id="bottomSheetOverlay" class="bottom-sheet-overlay hidden">
     <div class="bottom-sheet">
@@ -267,12 +310,6 @@
   </div>
 
   <script>
-    function isIOS() {
-      return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    }
-  </script>
-
-  <script>
     lucide.createIcons();
 
     (function () {
@@ -281,15 +318,12 @@
       const errorDiv = document.getElementById('error');
       const resultDiv = document.getElementById('result');
       const thumbnailEl = document.getElementById('thumbnail');
-      const videoPlayer = document.getElementById('videoPlayer');
       const downloadBtn = document.getElementById('downloadButton');
-      const iosTip = document.getElementById('iosTip');
-      const iosLink = document.getElementById('directLinkIOS');
       const overlay = document.getElementById('bottomSheetOverlay');
       const watchAdBtn = document.getElementById('watchAdBtn');
       const closeSheetBtn = document.getElementById('closeSheetBtn');
-      const pasteBtn = document.getElementById('pasteBtn');
 
+      const pasteBtn = document.getElementById('pasteBtn');
       pasteBtn.addEventListener('click', async () => {
         try {
           const text = await navigator.clipboard.readText();
@@ -299,9 +333,18 @@
         }
       });
 
+     window.addEventListener('DOMContentLoaded', () => {
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  if (isIOS) {
+    const iosWarning = document.getElementById('iosWarning');
+    iosWarning.classList.remove('hidden');
+  }
+});
+
       const tiktokRegex = /^(https?:\/\/)?(www\.)?(vm\.tiktok\.com|m\.tiktok\.com|tiktok\.com)\/.+$/i;
 
       downloadBtn.setAttribute('disabled', true);
+      //downloadBtn.style.opacity = '0.6';
 
       downloadBtn.addEventListener('click', function (e) {
         if (downloadBtn.hasAttribute('disabled')) {
@@ -313,6 +356,7 @@
       watchAdBtn.addEventListener('click', function () {
         overlay.classList.add('hidden');
         downloadBtn.removeAttribute('disabled');
+        downloadBtn.style.opacity = '1';
         window.open("https://s.shopee.com.br/8007aI92bN", "_blank");
       });
 
@@ -356,30 +400,19 @@
             isExpanded = !isExpanded;
             titleShortEl.textContent = isExpanded ? fullTitle : shortTitle;
             toggleBtn.setAttribute('aria-expanded', isExpanded);
+
+            // Limpa o conteúdo do botão e adiciona o ícone correto
             toggleBtn.innerHTML = '';
             const icon = document.createElement('i');
             icon.setAttribute('data-lucide', isExpanded ? 'chevron-up' : 'chevron-down');
             toggleBtn.appendChild(icon);
+
             lucide.createIcons();
           };
 
           thumbnailEl.src = result.data.cover;
           thumbnailEl.alt = 'Thumbnail do vídeo';
-
-          videoPlayer.src = result.data.play;
           downloadBtn.href = result.data.play;
-
-          if (isIOS()) {
-            iosTip.classList.remove('hidden');
-            iosLink.style.display = 'block';
-            iosLink.href = result.data.play;
-            downloadBtn.classList.add('hidden');
-          } else {
-            iosTip.classList.add('hidden');
-            iosLink.style.display = 'none';
-            downloadBtn.classList.remove('hidden');
-          }
-
           resultDiv.classList.remove('hidden');
         } catch (err) {
           errorDiv.textContent = err.message || 'Erro ao buscar o vídeo.';
